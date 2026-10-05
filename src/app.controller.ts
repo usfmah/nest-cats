@@ -1,6 +1,8 @@
-import { Controller, Get, Req, Post, HttpCode, Header, Redirect } from '@nestjs/common';
+import { Controller, Get, Put, Patch, Delete, Post, Param, Body, Query } from '@nestjs/common';
 import { AppService } from './app.service.js';
-import type {Request} from 'express';
+import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto.js';
+
+
 
 @Controller()
 export class AppController {
@@ -14,23 +16,28 @@ export class AppController {
 
 @Controller('cats')
 export class CatsController {
-  @Get()
-  findAll(@Req() request: Request): string {
-    console.log(request.method);
-    console.log(request.url);
-    return 'This action returns all cats';
-  }
-
   @Post()
-  @HttpCode(204)
-  @Header('Cache-Control', 'no-store')
-  create(): string {
-    return 'This returns a new cat';
+  create(@Body() createCatDto: CreateCatDto) {
+    return 'This adds a new cat';
   }
 
-  @Get('usf') 
-  @Redirect('https://nestjs.com', 301)
-  getCatColor(): string {
-    return 'this is colored'
+  @Get()
+  findAll(@Query() query: ListAllEntities) {
+    return `This action returns all cats (limit: ${query.limit} items)`;
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return `This action returns a #${id} cat`;
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
+    return `This action updates a #${id} cat`;
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return `This action removes a #${id} cat`;
   }
 }

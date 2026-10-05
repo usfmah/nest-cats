@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { createObserveModule } from '@nestjs/observe';
-import { AppController } from './app.controller.js';
+import { AppController, CatsController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { ConfigModule } from '@nestjs/config';
 
@@ -15,7 +15,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       serviceId: 'nest-cats',
     }),
   ],
-  controllers: [AppController],
+  controllers: [AppController, CatsController], 
   providers: [AppService],
 })
 export class AppModule {}
