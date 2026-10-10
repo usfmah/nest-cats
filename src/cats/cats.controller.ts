@@ -1,29 +1,19 @@
 import { Controller, Get, Put, Patch, Delete, Post, Param, Body, Query } from '@nestjs/common';
-import { AppService, catsService } from './app.service.js';
+import { CatsService } from './cats.service.js';
 import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto/dto.js';
 import type { Cat } from './interfaces/cat.interface.js';
 
 
 
 
-@Controller()
-export class AppController {
-  constructor(private readonly appService: AppService) {}
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
-}
-
 @Controller('cats')
 export class CatsController {
 
-  constructor(private catsService: catsService) {}
+  constructor(private catsService: CatsService) {}
 
   @Post()
   create(@Body() createCatDto: CreateCatDto) {
-    return 'This adds a new cat';
+     this.catsService.create(createCatDto);
   }
 
   @Get()
