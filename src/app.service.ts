@@ -15,9 +15,8 @@ export class catsService {
   
   create(cat: Cat) {
     this.cats.push(cat);
-
+  }
   findAll(): Cat[] {
     return this.cats;
   }
   }
-}

@@ -1,12 +1,12 @@
 import { Controller, Get, Put, Patch, Delete, Post, Param, Body, Query } from '@nestjs/common';
-import { AppService } from './app.service.js';
-import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto.js';
+import { AppService, catsService } from './app.service.js';
+import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto/dto.js';
 import type { Cat } from './interfaces/cat.interface.js';
 
 
 
 
-@Controller()git@github.com:usfmah/nest-cats.git
+@Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
@@ -19,7 +19,7 @@ export class AppController {
 @Controller('cats')
 export class CatsController {
 
-  constructor(private catsService: CatsService) {}
+  constructor(private catsService: catsService) {}
 
   @Post()
   create(@Body() createCatDto: CreateCatDto) {
@@ -31,10 +31,6 @@ export class CatsController {
     return this.catsService.findAll();
   }
 
-  @Get()
-  findAll(@Query() query: ListAllEntities) {
-    return `This action returns all cats (limit: ${query.limit} items)`;
-  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
